@@ -5,19 +5,13 @@ import ContactFilter from './ContactFilter';
 import ContactList from './ContactList';
 import { MainTitle } from './App.styled';
 function App() {
-  const [contacts, setContacts] = useState(storageData);
+  const [contacts, setContacts] = useState(() =>
+    JSON.parse(localStorage.getItem('contacts') || [])
+  );
   const [filter, setFilter] = useState('');
   useEffect(() => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
-  function storageData() {
-    const store = localStorage.getItem('contacts');
-    const parsedStorage = JSON.parse(store);
-    if (parsedStorage) {
-      return parsedStorage;
-    }
-    return [];
-  }
   const handleChangeFilter = evt => {
     const target = evt.target;
     setFilter(target.value);
